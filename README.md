@@ -1,21 +1,33 @@
 # HydroTrack
 
-A responsive, installable water-intake tracker built with plain HTML, CSS and JavaScript. No framework, build step, account or API key required.
+HydroTrack is a lightweight water-intake tracker with an Android APK build.
 
-## Features
-- Log water with quick-add buttons or a custom amount.
-- Daily goal, progress ring, remaining amount and glass count.
-- Undo the latest entry and reset today's log.
-- Configurable reminder interval (30, 60, 90 or 120 minutes), quiet hours and daily target.
-- Saves data locally in the browser.
-- PWA manifest and service worker for installability and offline app-shell caching.
+## App features
+- Default daily target: **3,000 ml (3 litres)**, adjustable in settings.
+- One-tap **+50 ml** logging, quick-add 250/500 ml and custom amounts.
+- Progress ring, remaining amount, entry count, recent entries, undo and daily reset.
+- Configurable reminder window and vibration setting.
+- Native Android local notifications scheduled every 30 minutes, repeating daily, using Capacitor Local Notifications.
+- Local-only storage; no account or analytics.
 
-## Deploy with GitHub Pages
-1. In **Settings → Pages**, choose **Deploy from a branch**, select `main` and `/ (root)`, then save.
-2. Wait for the Pages deployment to finish. The site URL is `https://cr07thegoat2025-cloud.github.io/hydrotrack/`.
+## Build the Android app locally
+Requires Node 20+, JDK 21 and Android SDK.
 
-## Notifications: important limitation
-The current version schedules reminders while the page/app is running and can show browser notifications after permission is granted. Browsers and Android may suspend timers when the app is backgrounded or closed. A service worker cannot run a reliable repeating timer by itself. For dependable reminders while an Android APK is closed, package the site with a wrapper that supports native local notifications and schedule repeating notifications using Android's notification APIs. Web Push also requires a push server and user subscription; it is not included here.
+```bash
+npm install
+npm run build
+npx cap add android
+npx cap sync android
+cd android
+./gradlew assembleDebug
+```
+APK output: `android/app/build/outputs/apk/debug/app-debug.apk`.
 
-## Privacy
-Water logs and settings stay in this browser's local storage. There is no analytics, tracking, account system or external API call.
+## GitHub APK releases
+Every push to `main` (and manual workflow run) triggers the Android build. GitHub Actions attaches the installable debug APK to a GitHub Release. This is a debug-signed APK for testing/distribution; a production release should be signed with a private keystore and GitHub Actions secrets.
+
+## Notification notes
+The Android build uses the Capacitor Local Notifications plugin. Android may ask for notification permission; users must allow it. Android battery optimization, manufacturer background limits, Do Not Disturb and exact-alarm policies can affect delivery. Test reminders on the target devices before relying on them. Browser/PWA reminders cannot guarantee delivery while the browser is closed.
+
+## Health note
+3 litres is the app's default tracking target, not a universal medical recommendation. Individual fluid needs vary; users should adjust their target as appropriate.
