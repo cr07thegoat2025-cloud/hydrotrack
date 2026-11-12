@@ -1,13 +1,18 @@
 {
-  "name": "HydroTrack — Water Reminder",
+  "name": "HydroTrack",
   "short_name": "HydroTrack",
-  "description": "Track your daily water intake and get gentle hydration reminders.",
+  "description": "Track water intake and get hydration reminders.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f2f7ff",
-  "theme_color": "#087cf0",
+  "background_color": "#071426",
+  "theme_color": "#071426",
   "icons": [
-    {"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
   ]
 }
