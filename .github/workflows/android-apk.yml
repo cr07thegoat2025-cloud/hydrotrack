@@ -26,6 +26,8 @@ jobs:
         run: npm run build
       - name: Generate Android project
         run: npx cap add android
+      - name: Declare Android exact-alarm permission
+        run: sed -i '/<application/i\\    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />' android/app/src/main/AndroidManifest.xml
       - name: Sync Capacitor plugins
         run: npx cap sync android
       - name: Build installable debug APK
